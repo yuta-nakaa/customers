@@ -23,16 +23,16 @@ function h($str)
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 
-function getCustomerInfo()
+function getCustomersInfo()
 {
     $dbh = connectDb();
 
-    $sql = <<<EMO
+    $sql = <<<EOM
     SELECT
         *
     FROM
         customers
-    EMO;
+    EOM;
 
     $stmt = $dbh->prepare($sql);
 
