@@ -40,3 +40,19 @@ function getCustomersInfo()
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function insertValidate($company,$name,$email)
+{
+    $errors = [];
+
+    if ($company  == '') {
+        $errors[] = '会社名を入力してください';
+    }
+    if ($name  == '') {
+        $errors[] = '氏名を入力してください';
+}
+    if ($email  == '') {
+        $errors[] = 'メールアドレスを入力してください';
+}
+    return $errors;
+}
