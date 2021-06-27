@@ -41,8 +41,10 @@ function getCustomersInfo()
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function insertValidate($company,$name,$email)
+function insertValidate($company, $name, $email)
 {
+    $dbh = connectDb();
+
     $errors = [];
 
     if ($company  == '') {
@@ -52,7 +54,37 @@ function insertValidate($company,$name,$email)
         $errors[] = '氏名を入力してください';
 }
     if ($email  == '') {
-        $errors[] = 'メールアドレスを入力してください';
+        $errors[] ='メールアドレスを入力してください';
 }
     return $errors;
+}
+function insertTask($title)
+{
+    try {
+        $dbh = connectDb();
+        $sql = <<<EOM
+        INSERT INTO
+            customers
+            (title)
+        VALUES
+            (:title);
+        EOM;
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindParam(':title',$title, PDO::PARAM_STR);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+}
+function createErrMsg($errors)
+{
+    $err_msg = "<ul class=\"errors\">\n";
+
+    foreach ($errors as $error) {
+        $err_msg .= "<li>" . h($error) . "</li>\n";
+    }
+
+    $err_msg .= "</ul>\n";
+
+    return $err_msg;
 }

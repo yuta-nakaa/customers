@@ -13,19 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $company = filter_input(INPUT_POST, 'company');
     $name = filter_input(INPUT_POST, 'name');
     $email = filter_input(INPUT_POST, 'email');
-    $errors = insertValidate($company,$name,$email);
+    $errors = [];
 
-    if ($company == '') {
-        $errors[] = '会社名を入力してください';
-    }
-    if ($name == '') {
-        $errors[] = '氏名を入力してください';
-    }
-    if ($email == '') {
-        $errors[] = 'メールアドレスを入力してください';
-    }
+
+    $errors = insertValidate($company, $name, $email);
 
     if (empty($errors)) {
+        $dbh = connectDb();
+
         $sql = <<<EOM
         INSERT INTO
             customers
@@ -43,10 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         EOM;
 
         $stmt = $dbh->prepare($sql);
+
         $stmt->bindParam(':company', $company, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
+        header('Location: index.php');
+        exit;
     }
 }
 
@@ -76,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" id="name" name="name" value="<?= h($name) ?>">
                 <label for=" email">メールアドレス</label>
                 <input type="email" id="email" name="email" value="<?= h($email) ?>">
-                <input type=" submit" class="btn submit-btn" value="追加">
+                <input type="submit" class="btn submit-btn" value="追加">
             </form>
             <a href="index.php" class="btn return-btn">戻る</a>
         </div>
