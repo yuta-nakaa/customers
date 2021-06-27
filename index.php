@@ -4,10 +4,7 @@ require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/config.php';
 
 $customers_info = getCustomersInfo();
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -40,9 +37,7 @@ $customers_info = getCustomersInfo();
                     <?php endforeach ?>
                 </tbody>
             </table>
-
             <a href="new.php" class="btn new-btn">新規登録</a>
-
         </div>
     </div>
 </body>

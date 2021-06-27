@@ -52,29 +52,11 @@ function insertValidate($company, $name, $email)
     }
     if ($name  == '') {
         $errors[] = '氏名を入力してください';
-}
+    }
     if ($email  == '') {
         $errors[] ='メールアドレスを入力してください';
-}
-    return $errors;
-}
-function insertTask($title)
-{
-    try {
-        $dbh = connectDb();
-        $sql = <<<EOM
-        INSERT INTO
-            customers
-            (title)
-        VALUES
-            (:title);
-        EOM;
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindParam(':title',$title, PDO::PARAM_STR);
-        $stmt->execute();
-    } catch (PDOException $e) {
-        echo $e->getMessage();
     }
+    return $errors;
 }
 function createErrMsg($errors)
 {
