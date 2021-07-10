@@ -31,8 +31,8 @@ $customers_info = getCustomersInfo();
                             <td><?= h($info['company']) ?></td>
                             <td><?= h($info['name']) ?></td>
                             <td><?= h($info['email']) ?></td>
-                            <td><a href="edit.php" class="btn edit-btn">編集</a></td>
-                            <td><a href="delete.php" class="btn delete-btn">削除</a></td>
+                            <td><a href="edit.php?id=<?= h($info['id']) ?>" class="btn edit-btn">編集</a></td>
+                            <td><a href="delete.php?id=<?= h($info['id']) ?>" class="btn delete-btn">削除</a></td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
