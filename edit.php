@@ -77,12 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1 class="title"><a href="index.php">顧客管理アプリ</a></h1>
         <div class="form-area">
             <h2 class="sub-title">編集</h2>
-                <?php if ($errors) : ?>
+            <?php if ($errors) : ?>
+                <ul class="errors">
                     <?php foreach ($errors as $error) : ?>
                         <li><?= h($error) ?></li>
                     <?php endforeach; ?>
                 <?php endif; ?>
-                
+                </ul>
                 <form action="" method="post">
                     <label for="company">会社名</label>
                     <input type="text" id="company" name="company" value="<?= h($info['company']) ?>">
