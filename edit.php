@@ -22,7 +22,7 @@ EOM;
 $stmt = $dbh->prepare($sql);
 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
-$info = $stmt->fetch(PDO::FETCH_ASSOC);
+$customer = $stmt->fetch(PDO::FETCH_ASSOC);
 // 更新処理
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // フォームに入力されたデータを受け取る
@@ -33,9 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors = insertValidate($company, $name, $email);
 
     if (
-        $info['company'] == $company &&
-        $info['name'] == $name &&
-        $info['email'] == $email
+        $customer['company'] == $company &&
+        $customer['name'] == $name &&
+        $customer['email'] == $email
     ) {
         $errors[] = '変更内容がありません';
     }
@@ -60,9 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: index.php');
         exit;
     }
-    $info['company'] = $company;
-    $info['name'] = $name;
-    $info['email'] = $email;
+    $customer['company'] = $company;
+    $customer['name'] = $name;
+    $customer['email'] = $email;
 }
 ?>
 <!DOCTYPE html>
@@ -86,14 +86,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </ul>
                 <form action="" method="post">
                     <label for="company">会社名</label>
-                    <input type="text" id="company" name="company" value="<?= h($info['company']) ?>">
+                    <input type="text" id="company" name="company" value="<?= h($customer['company']) ?>">
                     <label for="name">氏名</label>
-                    <input type="text" id="name" name="name" value="<?= h($info['name']) ?>">
+                    <input type="text" id="name" name="name" value="<?= h($customer['name']) ?>">
                     <label for="email">メールアドレス</label>
-                    <input type="email" id="email" name="email" value="<?= h($info['email']) ?>">
+                    <input type="email" id="email" name="email" value="<?= h($customer['email']) ?>">
                     <input type="submit" class="btn submit-btn" value="更新">
                 </form>
-                <a href="index.php?id=<?= h($info['id']) ?>" class="btn return-btn">戻る</a>
+                <a href="index.php" class="btn return-btn">戻る</a>
         </div>
     </div>
 </body>
